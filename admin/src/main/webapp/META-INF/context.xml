@@ -20,7 +20,7 @@
               username="root"
               password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+              url="jdbc:mysql://localhost:3306/greencart?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
 
     <Resource name="jdbc/storage"
               auth="Container"
@@ -42,7 +42,7 @@
               username="root"
               password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+              url="jdbc:mysql://localhost:3306/greencart?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
 
     <Resource name="jdbc/secure"
               auth="Container"
@@ -64,5 +64,5 @@
               username="root"
               password="root"
               driverClassName="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+              url="jdbc:mysql://localhost:3306/greencart?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
 </Context>
