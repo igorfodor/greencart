@@ -1,0 +1,298 @@
+Index: admin/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- admin/pom.xml	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ admin/pom.xml	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -146,12 +146,12 @@
+             <artifactId>core</artifactId>
+         </dependency>
+         <dependency>
+-            <groupId>org.hsqldb</groupId>
+-            <artifactId>hsqldb</artifactId>
+-        </dependency>
+-        <dependency>
+             <groupId>org.apache.tomcat</groupId>
+             <artifactId>tomcat-jdbc</artifactId>
++        </dependency>
++        <dependency>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
+         </dependency>
+         <dependency>
+             <groupId>commons-dbcp</groupId>
+Index: admin/src/main/resources/runtime-properties/development.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- admin/src/main/resources/runtime-properties/development.properties	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ admin/src/main/resources/runtime-properties/development.properties	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -7,4 +7,8 @@
+ # Please see common-shared.properties for more information on how the properties files work
+ 
+ exception.showDebugMessage=true
+-blPU.hibernate.hbm2ddl.auto=none
+\ No newline at end of file
++blPU.hibernate.hbm2ddl.auto=none
++
++blPU.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
++blSecurePU.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
++blCMSStorage.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+\ No newline at end of file
+Index: admin/src/main/webapp/META-INF/context.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- admin/src/main/webapp/META-INF/context.xml	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ admin/src/main/webapp/META-INF/context.xml	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -17,10 +17,10 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ 
+     <Resource name="jdbc/storage"
+               auth="Container"
+@@ -39,10 +39,10 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ 
+     <Resource name="jdbc/secure"
+               auth="Container"
+@@ -61,8 +61,8 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ </Context>
+\ No newline at end of file
+Index: core/src/main/resources/runtime-properties/common-shared.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/main/resources/runtime-properties/common-shared.properties	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ core/src/main/resources/runtime-properties/common-shared.properties	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -60,21 +60,21 @@
+ # ##################################### #
+ 
+ # Settings for the default persistence unit
+-blPU.hibernate.hbm2ddl.auto=validate
++blPU.hibernate.hbm2ddl.auto=none
+ blPU.hibernate.dialect=org.hibernate.dialect.HSQLDialect
+ blPU.hibernate.show_sql=false
+ blPU.hibernate.cache.use_second_level_cache=true
+ blPU.hibernate.cache.use_query_cache=true
+ blPU.hibernate.hbm2ddl.import_files=null
+ # Settings for the CMS storage persistence unit
+-blCMSStorage.hibernate.hbm2ddl.auto=validate
++blCMSStorage.hibernate.hbm2ddl.auto=none
+ blCMSStorage.hibernate.dialect=org.hibernate.dialect.HSQLDialect
+ blCMSStorage.hibernate.show_sql=false
+ blCMSStorage.hibernate.cache.use_second_level_cache=true
+ blCMSStorage.hibernate.cache.use_query_cache=true
+ blCMSStorage.hibernate.hbm2ddl.import_files=null
+ # Settings for the secure persistence unit
+-blSecurePU.hibernate.hbm2ddl.auto=validate
++blSecurePU.hibernate.hbm2ddl.auto=none
+ blSecurePU.hibernate.dialect=org.hibernate.dialect.HSQLDialect
+ blSecurePU.hibernate.show_sql=false
+ blSecurePU.hibernate.cache.use_second_level_cache=false
+Index: core/src/main/resources/runtime-properties/development-shared.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- core/src/main/resources/runtime-properties/development-shared.properties	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ core/src/main/resources/runtime-properties/development-shared.properties	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -14,7 +14,7 @@
+ # directory.
+ # 
+ # In non-development environments, this defaults to "/broadleaf/assets".
+-asset.server.file.system.path=
++asset.server.file.system.path=c:/data/assetsDemoSite
+ 
+                                     
+ blPU.hibernate.hbm2ddl.import_files=/config/bc/sql/load_admin_permissions.sql,\
+@@ -33,9 +33,9 @@
+                                     /sql/load_catalog_i18n_data_ES.sql,\
+                                     /sql/load_sitemap_data.sql
+ 
+-blPU.hibernate.hbm2ddl.auto=create-drop
+-blCMSStorage.hibernate.hbm2ddl.auto=update
+-blSecurePU.hibernate.hbm2ddl.auto=update
++blPU.hibernate.hbm2ddl.auto=none
++blCMSStorage.hibernate.hbm2ddl.auto=none
++blSecurePU.hibernate.hbm2ddl.auto=none
+ 
+ # Cache page templates for just 2 seconds in development (allows for caching during a single request)
+ cache.page.templates.ttl=2000
+\ No newline at end of file
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- pom.xml	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ pom.xml	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -12,6 +12,7 @@
+     <properties>
+         <blc.version>3.1.0-GA</blc.version>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
++        <mysql.connector.version>5.1.26</mysql.connector.version>
+     </properties>
+     <description>My Company's eCommerce Website</description>
+     <repositories>
+@@ -239,11 +240,16 @@
+ 
+             <!-- Other dependencies -->
+             <dependency>
+-                <groupId>org.hsqldb</groupId>
+-                <artifactId>hsqldb</artifactId>
+-                <version>2.3.1</version>
++                <groupId>org.apache.tomcat</groupId>
++                <artifactId>tomcat-jdbc</artifactId>
++                <version>7.0.30</version>
+                 <type>jar</type>
+-                <scope>compile</scope>
++            </dependency>
++            <dependency>
++                <groupId>mysql</groupId>
++                <artifactId>mysql-connector-java</artifactId>
++                <version>${mysql.connector.version}</version>
++                <type>jar</type>
+             </dependency>
+             <dependency>
+                 <groupId>commons-dbcp</groupId>
+Index: site/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- site/pom.xml	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ site/pom.xml	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -122,8 +122,8 @@
+             <artifactId>broadleaf-framework-web</artifactId>
+         </dependency>
+         <dependency>
+-            <groupId>org.hsqldb</groupId>
+-            <artifactId>hsqldb</artifactId>
++            <groupId>mysql</groupId>
++            <artifactId>mysql-connector-java</artifactId>
+         </dependency>
+         <dependency>
+             <groupId>javax.servlet</groupId>
+Index: site/src/main/resources/runtime-properties/common.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- site/src/main/resources/runtime-properties/common.properties	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ site/src/main/resources/runtime-properties/common.properties	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -10,4 +10,4 @@
+ solr.source=solrEmbedded
+ solr.source.reindex=solrEmbedded
+ solr.index.start.delay=5000
+-solr.index.repeat.interval=3600000
+\ No newline at end of file
++solr.index.repeat.interval=3600000
+Index: site/src/main/resources/runtime-properties/development.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- site/src/main/resources/runtime-properties/development.properties	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ site/src/main/resources/runtime-properties/development.properties	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -6,4 +6,12 @@
+ 
+ # Please see common-shared.properties for more information on how the properties files work
+ 
+-blPU.hibernate.hbm2ddl.auto=create-drop
+\ No newline at end of file
++exception.showDebugMessage=true
++blPU.hibernate.hbm2ddl.auto=none
++
++blPU.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
++blSecurePU.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
++blCMSStorage.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
++
++asset.server.file.system.path=c:/data/assetsDemoSite
++file.service.temp.file.base.directory=c:/data/assetsDemoSite/tmp
+\ No newline at end of file
+Index: site/src/main/webapp/META-INF/context.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- site/src/main/webapp/META-INF/context.xml	(revision aef02f43c31d93fcef3a63630671466a9e045552)
++++ site/src/main/webapp/META-INF/context.xml	(revision 30a7eaa9f3f03e6bf1551c494e218bcc4eeadf59)
+@@ -17,10 +17,10 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ 
+     <Resource name="jdbc/storage"
+               auth="Container"
+@@ -39,10 +39,10 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ 
+     <Resource name="jdbc/secure"
+               auth="Container"
+@@ -61,8 +61,8 @@
+               logAbandoned="true"
+               minEvictableIdleTimeMillis="30000"
+               jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+-              username="${database.user}"
+-              password="${database.password}"
+-              driverClassName="${database.driver}"
+-              url="${database.url}"/>
++              username="root"
++              password="root"
++              driverClassName="com.mysql.jdbc.Driver"
++              url="jdbc:mysql://localhost:3306/demosite3?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8"/>
+ </Context>
+\ No newline at end of file
